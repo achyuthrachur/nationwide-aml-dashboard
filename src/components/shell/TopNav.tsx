@@ -13,7 +13,7 @@ export function TopNav() {
   return (
     <header role="banner" className="bg-[#003571] text-white px-6 h-14 flex items-center justify-between shrink-0 z-30">
       <div className="flex items-center gap-4">
-        <span className="text-lg font-bold tracking-wide">Nationwide</span>
+        <img src="/nationwide-logo.webp" alt="Nationwide" className="h-8 object-contain brightness-0 invert" />
         <div className="w-px h-5 bg-white/20" />
         <span className="text-sm font-medium text-white/90 tracking-wide">
           AML/BSA Continuous Monitoring
