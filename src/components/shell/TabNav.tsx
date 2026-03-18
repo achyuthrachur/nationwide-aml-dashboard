@@ -5,10 +5,6 @@ import type { BreachMap } from "@/lib/breachState";
 export type TabId =
   | "executive-summary"
   | "alert-review"
-  | "blocked-accounts"
-  | "reapply-risk"
-  | "disposition-quality"
-  | "list-feed-health"
   | "sar-sirf"
   | "cip-kyc"
   | "training"
@@ -20,17 +16,11 @@ interface Tab {
 }
 
 const TABS: Tab[] = [
-  // KPI Tabs
   { id: "executive-summary",   label: "Executive Summary"   },
   { id: "alert-review",        label: "Alert Management"    },
   { id: "sar-sirf",            label: "SAR/SIRF Reporting"  },
   { id: "cip-kyc",             label: "CIP/KYC Compliance"  },
   { id: "training",            label: "Training & Culture"  },
-  // Monitoring & Risk Tabs
-  { id: "blocked-accounts",    label: "Blocked Accounts"    },
-  { id: "reapply-risk",        label: "Reapply Risk"        },
-  { id: "disposition-quality",  label: "Disposition Quality" },
-  { id: "list-feed-health",    label: "List & Feed Health"  },
   { id: "kri-dashboard",       label: "KRI Dashboard"       },
 ];
 

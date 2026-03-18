@@ -6,10 +6,6 @@ import { FilterBar } from "@/components/shell/FilterBar";
 import { TabNav, type TabId } from "@/components/shell/TabNav";
 import ExecutiveSummary from "@/components/tabs/ExecutiveSummary";
 import AlertReview from "@/components/tabs/AlertReview";
-import BlockedAccounts from "@/components/tabs/BlockedAccounts";
-import ReapplyRisk from "@/components/tabs/ReapplyRisk";
-import DispositionQuality from "@/components/tabs/DispositionQuality";
-import ListFeedHealth from "@/components/tabs/ListFeedHealth";
 import SarSirfReporting from "@/components/tabs/SarSirfReporting";
 import CipKycCompliance from "@/components/tabs/CipKycCompliance";
 import TrainingCulture from "@/components/tabs/TrainingCulture";
@@ -47,16 +43,12 @@ export default function DashboardPage() {
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: "easeOut" }}
           >
-            {activeTab === "executive-summary"   && <ExecutiveSummary filter={filter} onTabChange={setActiveTab} />}
-            {activeTab === "alert-review"        && <AlertReview filters={filter} />}
-            {activeTab === "blocked-accounts"    && <BlockedAccounts filter={filter} />}
-            {activeTab === "reapply-risk"        && <ReapplyRisk filter={filter} />}
-            {activeTab === "disposition-quality" && <DispositionQuality filter={filter} onTabChange={setActiveTab} />}
-            {activeTab === "list-feed-health"    && <ListFeedHealth filter={filter} />}
-            {activeTab === "sar-sirf"            && <SarSirfReporting filter={filter} />}
-            {activeTab === "cip-kyc"             && <CipKycCompliance filter={filter} />}
-            {activeTab === "training"            && <TrainingCulture filter={filter} />}
-            {activeTab === "kri-dashboard"       && <KriDashboard filter={filter} />}
+            {activeTab === "executive-summary" && <ExecutiveSummary filter={filter} onTabChange={setActiveTab} />}
+            {activeTab === "alert-review"      && <AlertReview filters={filter} />}
+            {activeTab === "sar-sirf"          && <SarSirfReporting filter={filter} />}
+            {activeTab === "cip-kyc"           && <CipKycCompliance filter={filter} />}
+            {activeTab === "training"          && <TrainingCulture filter={filter} />}
+            {activeTab === "kri-dashboard"     && <KriDashboard filter={filter} />}
           </motion.div>
         </AnimatePresence>
       </main>
