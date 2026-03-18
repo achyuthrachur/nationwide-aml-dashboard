@@ -123,25 +123,30 @@ export default function SarSirfReporting({ filter }: SarSirfReportingProps) {
 
       {/* KPI Row */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <KPICard label="Total SIRFs Filed" value={totalSirfs} unit="period" status="neutral" />
-        <KPICard label="Total SARs Filed" value={totalSars} unit="period" status="neutral" />
+        <KPICard label="Total SIRFs Filed" value={totalSirfs} unit="period" status="neutral"
+          subLabel="Internal referrals by 1st/2nd line" />
+        <KPICard label="Total SARs Filed" value={totalSars} unit="period" status="neutral"
+          subLabel="Regulatory filings by typology" />
         <KPICard
           label="Conversion Rate"
           value={conversionRate}
           unit="%"
           status={conversionRate >= 15 && conversionRate <= 25 ? "green" : conversionRate >= 10 ? "amber" : "red"}
+          subLabel="Target 15–25% · Low = under-detection"
         />
         <KPICard
           label="Avg Days SIRF→SAR"
           value={avgDaysToFile}
           unit="days"
           status={avgDaysToFile <= 25 ? "green" : avgDaysToFile <= 30 ? "amber" : "red"}
+          subLabel="Must not exceed 30-day window"
         />
         <KPICard
           label="SARs Filed On Time"
           value={onTimeRate}
           unit="%"
           status={onTimeRate === 100 ? "green" : "red"}
+          subLabel="Any late filing is a BSA violation"
         />
       </div>
 

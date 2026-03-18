@@ -182,6 +182,7 @@ export default function CipKycCompliance({ filter }: CipKycComplianceProps) {
           unit="%"
           status={cipStatus}
           trend={CIP_WEEKLY.slice(-12).map((w) => w.completionRate)}
+          subLabel="Target 100% · Null fields = findings"
         />
         <KPICard
           label="Null / Anomalous Fields"
@@ -203,6 +204,7 @@ export default function CipKycCompliance({ filter }: CipKycComplianceProps) {
           unit="this period"
           status="neutral"
           trend={HIGH_RISK_MONTHLY.slice(-8).map((m) => m.newAdditions)}
+          subLabel="New additions to watch list"
         />
         <KPICard
           label="Overdue Reviews"

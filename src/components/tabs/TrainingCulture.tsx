@@ -122,13 +122,13 @@ export default function TrainingCulture({ filter }: TrainingCultureProps) {
             value={86}
             unit="period"
             status="neutral"
-            subLabel="Current month referrals"
+            subLabel="Higher = healthier compliance culture"
           />
           <KPICard
             label="Trend vs Prior Period"
             value="+12%"
             status="green"
-            subLabel="YoY SIRF referral growth"
+            subLabel="YoY associate detection growth"
           />
         </div>
       </div>
