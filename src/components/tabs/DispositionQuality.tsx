@@ -6,15 +6,20 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip as RTooltip,
   ResponsiveContainer, ReferenceLine, Legend,
 } from "recharts";
-import { CheckCircle2, AlertTriangle, TrendingUp, TrendingDown, Info } from "lucide-react";
+import { CheckCircle2, AlertTriangle, TrendingUp, TrendingDown, Info, Link2 } from "lucide-react";
 import { DISPOSITION_WEEKLY, SETBACK_RECORDS } from "@/data/synthetic/disposition";
+import { SAR_RECORDS } from "@/data/synthetic/sarSirf";
+import { ALERT_RECORDS } from "@/data/synthetic/alerts";
 import { SPIKE_EVENTS } from "@/data/synthetic/spikes";
 import { REL_COLOR, TRX_COLOR } from "@/lib/alertTypeHelpers";
 import { KPICard } from "@/components/common/KPICard";
 import type { FilterState, DispositionWeek } from "@/types/index";
 
+import type { TabId } from "@/components/shell/TabNav";
+
 interface DispositionQualityProps {
   filter: FilterState;
+  onTabChange?: (id: TabId) => void;
 }
 
 // ── Formatters ────────────────────────────────────────────────────────────────
@@ -102,7 +107,11 @@ function SectionLabel({ label, noMargin }: { label: string; noMargin?: boolean }
 
 // ── Main Component ────────────────────────────────────────────────────────────
 
-export default function DispositionQuality({ filter }: DispositionQualityProps) {
+export default function DispositionQuality({ filter, onTabChange }: DispositionQualityProps) {
+  // Alert-to-SAR conversion rate
+  const alertToSarRate = ALERT_RECORDS.length > 0
+    ? (SAR_RECORDS.length / ALERT_RECORDS.length) * 100
+    : 0;
   const [hoveredSpike, setHoveredSpike] = useState<string | null>(null);
   const latestDate = DISPOSITION_WEEKLY[DISPOSITION_WEEKLY.length - 1].weekStart;
 
@@ -655,6 +664,45 @@ export default function DispositionQuality({ filter }: DispositionQualityProps) 
               ))}
             </tbody>
           </table>
+        </div>
+      </div>
+
+      {/* ── Bottom Row: Alert-to-SAR + Reapply Callout ─────────────────────── */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        {/* Alert-to-SAR Conversion Rate */}
+        <div className="bg-white rounded-xl border border-[#D0D9E8] shadow-sm p-5">
+          <SectionLabel label="Alert-to-SAR Conversion" />
+          <div className="flex items-baseline gap-3">
+            <span className="font-['IBM_Plex_Sans_Condensed'] font-bold text-3xl text-[#003571]">
+              {alertToSarRate.toFixed(2)}%
+            </span>
+            <span className="text-xs text-[#8699AF]">
+              {SAR_RECORDS.length} SARs / {ALERT_RECORDS.length} total alerts
+            </span>
+          </div>
+          <p className="text-xs text-[#4A5D75] mt-2">
+            Bridges disposition outcomes to SAR/SIRF reporting. A sustained increase may indicate worsening risk exposure or improved detection.
+          </p>
+        </div>
+
+        {/* Reapply Connection Callout */}
+        <div className="bg-white rounded-xl border border-[#D0D9E8] border-l-4 border-l-[#E61030] shadow-sm p-5">
+          <div className="flex items-start gap-3">
+            <Link2 size={18} className="text-[#E61030] flex-shrink-0 mt-0.5" />
+            <div>
+              <h4 className="text-sm font-semibold text-[#0A1628] mb-1">Reapply Risk Connection</h4>
+              <p className="text-xs text-[#4A5D75] leading-relaxed">
+                22 active reapply transactions flagged with potential sanctions exposure.
+                Incorrect disposition at original approval may have enabled indefinite straight-through processing.
+              </p>
+              <button
+                onClick={() => onTabChange?.("reapply-risk")}
+                className="mt-3 text-xs font-medium text-[#0065B3] hover:text-[#003571] flex items-center gap-1 transition-colors"
+              >
+                View Reapply Risk →
+              </button>
+            </div>
+          </div>
         </div>
       </div>
 

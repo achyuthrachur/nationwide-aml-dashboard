@@ -336,7 +336,7 @@ export default function AlertReview({ filters }: AlertReviewProps) {
   // Escalation protocols
   const l1SLAEsc = {
     action: 'Notify Analyst Lead within 1 hour. Escalate to Audit Director if unresolved in 4 hours.',
-    contacts: ['Analyst Lead — sanctions-lead@nationwide.com', 'Audit Director — audit-director@nationwide.com'],
+    contacts: ['AML Lead — aml-lead@nationwide.com', 'Compliance Director — compliance-director@nationwide.com'],
   }
   const mcEsc = {
     action: 'Immediate escalation to Audit Director and IT Security. Document in ATM. Remediate entitlement within 24 hours.',
@@ -395,35 +395,47 @@ export default function AlertReview({ filters }: AlertReviewProps) {
           {/* ── Section 1 — SLA KPI Cards ──────────────────────────────────── */}
           <div>
             <SectionLabel label="SLA Compliance — 7-Day Average" />
-            <div className={`grid gap-4 ${activeTier === 'L1' ? 'grid-cols-3' : 'grid-cols-2'}`}>
-              {activeTier === 'L1' && (
-                <>
-                  <KPICard
-                    label="L1 High Priority"
-                    value={kpi.curr.l1H}
-                    unit="%"
-                    delta={kpi.delta.l1H}
-                    status={slaStatus(kpi.curr.l1H / 100, thrL1H.targetCompliance, thrL1H.warningThreshold)}
-                    subLabel={`Target ${fmtPct(thrL1H.targetCompliance)} · SLA ${thrL1H.slaHours}h`}
-                  />
-                  <KPICard
-                    label="L1 Medium Priority"
-                    value={kpi.curr.l1M}
-                    unit="%"
-                    delta={kpi.delta.l1M}
-                    status={slaStatus(kpi.curr.l1M / 100, thrL1M.targetCompliance, thrL1M.warningThreshold)}
-                    subLabel={`Target ${fmtPct(thrL1M.targetCompliance)} · SLA ${thrL1M.slaHours}h`}
-                  />
-                  <KPICard
-                    label="L1 Low Priority"
-                    value={kpi.curr.l1L}
-                    unit="%"
-                    delta={kpi.delta.l1L}
-                    status={slaStatus(kpi.curr.l1L / 100, thrL1L.targetCompliance, thrL1L.warningThreshold)}
-                    subLabel={`Target ${fmtPct(thrL1L.targetCompliance)} · SLA ${thrL1L.slaHours}h`}
-                  />
-                </>
-              )}
+            <div className={`grid gap-4 ${activeTier === 'L1' ? 'grid-cols-2 md:grid-cols-4' : 'grid-cols-2'}`}>
+              {activeTier === 'L1' && (() => {
+                const l1Records = ALERT_RECORDS.filter(r => r.tier === 'L1')
+                const fpCount = l1Records.filter(r => r.disposition === 'false_positive').length
+                const fpRate = l1Records.length > 0 ? (fpCount / l1Records.length) * 100 : 0
+                return (
+                  <>
+                    <KPICard
+                      label="L1 High Priority"
+                      value={kpi.curr.l1H}
+                      unit="%"
+                      delta={kpi.delta.l1H}
+                      status={slaStatus(kpi.curr.l1H / 100, thrL1H.targetCompliance, thrL1H.warningThreshold)}
+                      subLabel={`Target ${fmtPct(thrL1H.targetCompliance)} · SLA ${thrL1H.slaHours}h`}
+                    />
+                    <KPICard
+                      label="L1 Medium Priority"
+                      value={kpi.curr.l1M}
+                      unit="%"
+                      delta={kpi.delta.l1M}
+                      status={slaStatus(kpi.curr.l1M / 100, thrL1M.targetCompliance, thrL1M.warningThreshold)}
+                      subLabel={`Target ${fmtPct(thrL1M.targetCompliance)} · SLA ${thrL1M.slaHours}h`}
+                    />
+                    <KPICard
+                      label="L1 Low Priority"
+                      value={kpi.curr.l1L}
+                      unit="%"
+                      delta={kpi.delta.l1L}
+                      status={slaStatus(kpi.curr.l1L / 100, thrL1L.targetCompliance, thrL1L.warningThreshold)}
+                      subLabel={`Target ${fmtPct(thrL1L.targetCompliance)} · SLA ${thrL1L.slaHours}h`}
+                    />
+                    <KPICard
+                      label="False Positive Rate"
+                      value={fpRate}
+                      unit="%"
+                      status={fpRate < 90 ? "green" : fpRate < 95 ? "amber" : "red"}
+                      subLabel="Target <90% · >95% = tuning needed"
+                    />
+                  </>
+                )
+              })()}
               {activeTier === 'L2' && (
                 <>
                   <KPICard

@@ -51,7 +51,7 @@ export default function DashboardPage() {
             {activeTab === "alert-review"        && <AlertReview filters={filter} />}
             {activeTab === "blocked-accounts"    && <BlockedAccounts filter={filter} />}
             {activeTab === "reapply-risk"        && <ReapplyRisk filter={filter} />}
-            {activeTab === "disposition-quality" && <DispositionQuality filter={filter} />}
+            {activeTab === "disposition-quality" && <DispositionQuality filter={filter} onTabChange={setActiveTab} />}
             {activeTab === "list-feed-health"    && <ListFeedHealth filter={filter} />}
             {activeTab === "sar-sirf"            && <SarSirfReporting filter={filter} />}
             {activeTab === "cip-kyc"             && <CipKycCompliance filter={filter} />}
