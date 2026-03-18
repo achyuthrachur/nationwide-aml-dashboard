@@ -31,8 +31,8 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-[#F5F7FA] flex flex-col">
       <TopNav />
-      <FilterBar filter={filter} onChange={setFilter} />
       <TabNav activeTab={activeTab} onTabChange={setActiveTab} breachMap={breachMap} />
+      {activeTab === "alert-review" && <FilterBar filter={filter} onChange={setFilter} />}
 
       <main role="tabpanel" id={`tabpanel-${activeTab}`} className="flex-1 overflow-auto">
         <AnimatePresence mode="wait">
